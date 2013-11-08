@@ -1,0 +1,145 @@
+import java.util.Scanner;
+/**
+ * This program calculates the amount of change to be returned when a certain amount of money is entered
+ * It continues to do this for every customer
+ * 
+ * @author Ashwini Iyer  
+ * @version 9/14/13
+ */
+public class ChangeMaker
+{
+    int amount;
+    private Scanner in;
+    Scanner customer = new Scanner(System.in);
+
+    public void changeMaker()
+    {
+    }
+
+    /**
+     * Asks the user what the price of the item is and returns that value.
+     * 
+     * @return the amount that the user has to pay
+     */
+    public double getAmountOwed ()
+    {
+      
+        System.out.println("Hello! What is the price of the item?");
+        double priceOfItem = customer.nextDouble();
+        return priceOfItem;
+
+    }
+
+    /**
+     * Prompts the user for the amount that they paid and returns the amount they said they paid.
+     * 
+     * @return the amount the user paid.
+     */
+    public double getAmountPaid()
+    {
+        System.out.print("How much did you pay?: ");
+        Scanner in = new Scanner(System.in);
+        double amountPaid = in.nextDouble();
+        return amountPaid;
+
+    }
+
+    /**
+     * Calculates how much money to return to the user and converts it into change.
+     * 
+     * @return amount of change in cents
+     */
+    public int returnCents()
+    {
+        int centsneeded = (int)(getAmountOwed()*100 + .1);
+        int centspaid = (int)(getAmountPaid()*100 + .1);
+        int centsreturn = centspaid - centsneeded;
+        if (centsreturn < 0) 
+        {
+            System.out.println("Oh No! Thats not enough. Please pay more! ");
+            return 0;
+        } 
+        else if (centsneeded == 0 || centspaid == 0) 
+        {
+            System.out.println("Bye! thanks for shopping with us!");
+            return 0;
+        } 
+        else 
+        {
+            return centsreturn;
+        }
+    }
+
+    /**
+     * Breaks the amount of money needed to be returned into change.
+     */
+    public void breakUpChange()
+    {
+        int change = returnCents();
+        double fullChange = (change/100.00);
+        int dollars = 0;
+        int quarters = 0;
+        int dimes = 0;
+        int nickels = 0;
+        for (dollars = 0; change >= 100; dollars++) 
+        {
+            change = change - 100;
+        }
+        for (quarters = 0; change >= 25; quarters++) 
+        {
+            change = change - 25;
+        }
+        for (dimes = 0; change >= 10; dimes++) 
+        {
+            change = change - 10;
+        }
+        for (nickels = 0; change >= 5; nickels++) 
+        {
+            change = change - 5;
+        }
+       
+        int pennies = change;
+
+        System.out.printf("Your change is: $%.2f  \n",fullChange);
+
+        if(dollars > 0)
+        {
+            System.out.printf("%d dollar(s)\n", dollars);
+        }
+        if(quarters > 0)
+        {
+            System.out.printf("%d quarter(s) \n", quarters);
+        }
+        if(nickels > 0)
+        {
+            System.out.printf("%d nickel(s) \n", nickels);
+        }
+        if(dimes > 0)
+        {
+            System.out.printf("%d dime(s) \n", dimes);
+        }
+
+        if(pennies > 1)
+        {
+            System.out.printf("%d pennies \n", pennies);
+        } else if (pennies == 1)
+        {
+            System.out.printf("1 penny  \n");
+        }
+    }
+
+    public static void main(String[] args)
+    {
+        ChangeMaker cashier = new ChangeMaker();
+        int repeat = 1;
+        while(repeat == 1) {
+            cashier.breakUpChange();
+            System.out.printf("Thanks!");
+            System.out.println("Are there more Customers? (yes = 1, no = 0)");
+            Scanner in = new Scanner (System.in);
+            repeat = in.nextInt();
+        }
+        System.out.println("Ok, bye!");
+    }
+
+}
